@@ -394,7 +394,7 @@ As a rule of thumb if the Haddock docs for the library does not have a **minimal
 worked example**, it is usually safe to assume that it is a RFC-style library
 and probably should be avoided.
 
-There are several authors who it usually safe to assume have uploaded a stable
+There are several authors who it is usually safe to assume have uploaded a stable
 and usable library. These include, but are not limited to:
 
 * Bryan O'Sullivan
@@ -500,7 +500,7 @@ Several commands for interactive options have shortcuts:
 ------  ---------
 ``+t``  Show types of evaluated expressions
 ``+s``  Show timing and memory usage
-``+m``  Enable multi-line expression delimited by ``:{`` and ``:}``.
+``+m``  Enable multi-line expressions delimited by ``:{`` and ``:}``.
 
 
 ```haskell
@@ -528,7 +528,7 @@ it :: Prelude.Integer
 ```
 
 The configuration for the GHCi shell can be customized globally by defining a
-``ghci.conf`` in ``$HOME/.ghc/`` or in the in current working directory as
+``ghci.conf`` in ``$HOME/.ghc/`` or in the current working directory as
 ``./.ghci.conf``.
 
 For example we can add a command to use the Hoogle type search from within GHCi.
@@ -603,7 +603,7 @@ undefined :: a
 ```
 
 The bottom is a singular value that inhabits every type. When evaluated the
-semantics of Haskell no longer yield a meaningful value. It's usually written as
+semantics of Haskell no longer yields a meaningful value. It's usually written as
 the symbol ⊥ (i.e. the compiler flipping you off ).
 
 An example of an infinite looping term:
@@ -676,7 +676,7 @@ listToMaybe []     =  Nothing
 listToMaybe (a:_)  =  Just a
 ```
 
-When a bottom define in terms of error is invoked it typically will not generate
+When a bottom defined in terms of error is invoked it typically will not generate
 any position information, but the function used to provide assertions ``assert``
 can be short circuited to generate position information in the place of either
 ``undefined`` or ``error`` call.
@@ -838,7 +838,7 @@ Typed Holes
 Since GHC 7.8 we have a new tool for debugging incomplete programs by means of
 *typed holes*. By placing an underscore on any value on the right hand-side of a
 declaration GHC will throw an error during type-checker that reflects the
-possible values that could placed at this point in the program to make to make
+possible values that could placed at this point in the program to make
 the program type-check.
 
 ```haskell
@@ -886,7 +886,7 @@ of Haskell and Nix will be and whether it is a workaround around some current
 cabal pain points or a deeper unifying model.
 
 Once the NixOS package manager is installed you can start a nix shell on the fly
-with a bunch of packages installed the nixos repos.
+with a bunch of packages installed in the nixos repos.
 
 ```bash
 $ nix-shell -p haskellPackages.parsec -p haskellPackages.mtl --command ghci
@@ -990,7 +990,7 @@ data T a b
   | B b -- ^ Documentation for B
 ```
 
-Elements within a module (value, types, classes) can be hyperlinked by enclosing
+Elements within a module (values, types, classes) can be hyperlinked by enclosing
 the identifier in single quotes.
 
 ```haskell
@@ -1075,7 +1075,7 @@ ignore-exports   Ignores the export list and includes all signatures in scope.
 not-home         Module will not be considered the root documentation.
 show-extensions  Annotates the documentation with the language extensions used.
 hide             Forces the module to be hidden from Haddock.
-prune            omits definitions with no annotations
+prune            Omits definitions with no annotations.
 
 
 Monads
@@ -1358,8 +1358,8 @@ about three very different but foundational ideas for programming: *Failure*,
 *Collections*, and *Effects*.
 
 Let's write down a new function called ``sequence`` which folds a function
-``mcons``, which we can think of as analogues to the list constructor (i.e. ``(a
-: b : [])``) except it pulls the two list elements out of of two monadic values
+``mcons``, which we can think of as analogous to the list constructor (i.e. ``(a
+: b)``) except it pulls the two list elements out of two monadic values
 (``p``,``q``) using bind.
 
 ```haskell
@@ -1472,7 +1472,7 @@ A simple implementation of the Writer monad:
 ~~~~
 
 This implementation is lazy so some care must be taken that one actually wants
-to only generate a stream of thunks.  Often this it is desirable to produce a
+to only generate a stream of thunks.  Often times it is desirable to produce a
 computation which requires a stream of thunks that can pulled lazily out of the
 ``runWriter``, but often times the requirement is to produce a finite stream of
 values that are forced at the invocation of ``runWriter``. Undesired laziness
@@ -1502,14 +1502,14 @@ A simple implementation of the State monad is only a few lines:
 Monad Tutorials
 ---------------
 
-So many monad tutorials have been written that it begs the question, what are
+So many monad tutorials have been written that it begs the question, what makes
 monads so difficult when first learning Haskell. I suggest there are three
 aspects to why this is so:
 
 1. *There are several levels on indirection with desugaring.*
 
 A lot of Haskell that we write is radically rearranged and transformed into
-entirely form under the hood.
+entirely new form under the hood.
 
 Most monad tutorials will not manually expand out the do-sugar. This leaves the
 beginner thinking that monads are a way of dropping into a pseudo-imperative
@@ -1543,7 +1543,7 @@ On the left hand side of the operator we have an ``m a`` and on the right we
 have ``a -> m b``. Although some languages do have infix operators that are
 themselves higher order functions, it is still a rather rare occurrence.
 
-So with a function desugared, it can confusing that ``(>>=)`` operator is in
+So with a function desugared, it can be confusing that ``(>>=)`` operator is in
 fact building up a much larger function by composing functions together.
 
 ```haskell
@@ -1573,15 +1573,15 @@ main = bind getLine (\x -> bind putStrLn (\_ -> return ()))
     bind x y = x >>= y
 ```
 
-3. *Ad-hoc polymorphism is not common place in other languages.*
+3. *Ad-hoc polymorphism is not commonplace in other languages.*
 
 Haskell's implementation overloading can be unintuitive if not familiar with
 type inference. It is abstracted away from the user but the ``(>>=)`` or
 ``bind`` function is really a function of 3 arguments with the extra typeclass
-dictionary argument (``$fMonad``) implicitly threaded around.
+dictionary argument (``$dMonad``) implicitly threaded around.
 
 ```haskell
-main $fMonad = bind $dMonad getLine (\x -> bind $dMonad putStrLn (\_ -> return $dMonad ()))
+main $dMonad = bind $dMonad getLine (\x -> bind $dMonad putStrLn (\_ -> return $dMonad ()))
 ```
 
 Except in the case where the parameter of the monad class is unified ( through
@@ -1863,7 +1863,7 @@ It's important to distinguish the categories of language extensions fall into:
 
 The inherent problem with classifying the extensions into **General** and **Specialized** category is that
 it's a subjective classification. Haskellers who do type astronautics will have a very different
-interpretation of Haskell then people who do database programming. As such this is a conservative assessment,
+interpretation of Haskell than people who do database programming. As such this is a conservative assessment,
 as an arbitrary baseline let's consider ``FlexibleInstances`` and ``OverloadedStrings`` "everyday" while
 ``GADTs`` and ``TypeFamilies`` are "specialized".
 
@@ -1908,7 +1908,7 @@ problems. These include:
 * IncoherentInstances
 * ImpredicativeTypes
 
-These almost always these indicate a design flaw and shouldn't be turned on to remedy the error at hand, as
+These almost always indicate a design flaw and shouldn't be turned on to remedy the error at hand, as
 much as GHC might suggest otherwise!
 
 Inference
@@ -2009,7 +2009,7 @@ As everyone eventually finds out there are several functions within implementati
 language ) that can be used to subvert the type-system, they are marked with the prefix ``unsafe``.  These
 functions exist only for when one can manually prove the soundness of an expression but can't express this
 property in the type-system. Using these functions without fulfilling the proof obligations will cause all
-measure of undefined behavior with unimaginable pain and suffering, and are <span style="font-weight:
+measure of undefined behavior with unimaginable pain and suffering, and is <span style="font-weight:
 bold">strongly discouraged</span>. When initially starting out with Haskell there are no legitimate reason to
 use these functions at all, period.
 
@@ -2019,8 +2019,8 @@ unsafePerformIO :: IO a -> a
 ```
 
 The Safe Haskell language extensions allow us to restrict the use of unsafe language features using ``-XSafe``
-which restricts the import of modules which are themselves marked as Safe. It also forbids the use of certain
-language extensions (``-XTemplateHaskell``) which can be used to produce unsafe code. The primary use case of
+which restricts us to the import of modules which are themselves marked as Safe. It also forbids the use of certain
+language extensions (e.g. ``-XTemplateHaskell``) which can be used to produce unsafe code. The primary use case of
 these extensions is security auditing.
 
 ```haskell
@@ -2100,7 +2100,7 @@ import qualified "mtl" Control.Monad.Reader as Reader
 
 **Record WildCards**
 
-Record wild cars allow us to expand out the names of a record as variables
+Record wild cards allow us to expand out the names of a record as variables
 scoped as the labels of the record implicitly.
 
 ~~~~ {.haskell include="src/04-extensions/wildcards.hs"}
@@ -2109,8 +2109,8 @@ scoped as the labels of the record implicitly.
 Pattern Synonyms
 ----------------
 
-Suppose we were writing a typechecker, it would very to common to include a
-distinct ``TArr`` term ease the telescoping of function signatures, this is what
+Suppose we were writing a typechecker, it would be very common to include a
+distinct ``TArr`` term to ease the telescoping of function signatures, this is what
 GHC does in its Core language. Even though technically it could be written in
 terms of more basic application of the ``(->)`` constructor. 
 
@@ -2124,7 +2124,7 @@ data Type
 ```
 
 With pattern synonyms we can eliminate the extraneous constructor without
-loosing the convenience of pattern matching on arrow types.
+losing the convenience of pattern matching on arrow types.
 
 ```haskell
 {-# LANGUAGE PatternSynonyms #-}
@@ -2165,7 +2165,7 @@ and can often be non-intuitive to the novice. This does reflect on the model
 itself, merely on the need for more instruction material and research on
 optimizing lazy compilers.
 
-The paradox of Haskell is that it many explores so many definably unique ideas (
+The paradox of Haskell is that it explores so many definably unique ideas (
 laziness, purity, typeclasses ) that it becomes difficult to separate out the
 discussion of any one from the gestalt of the whole implementation.
 
@@ -2362,7 +2362,7 @@ sum = go 0
     go acc []                  = acc
 ```
 
-Function application to seq'd arguments often enough that is has a special
+Function application to seq'd arguments is common enough that it has a special
 operator.
 
 ```haskell
@@ -2433,11 +2433,11 @@ Moral Correctness
 
 The caveat with lazy evaluation is that it implies inductive reasoning about
 functions must always take into account the fact that a function may contain
-bottoms. And as such claims about inductive proofs of functions have to couched
+bottoms. And as such claims about inductive proofs of functions have to be couched
 in an implied set of qualifiers "up to the fast and loose reasoning" assuming
 the non-existence of bottoms.
 
-In the "Fast and Loose reasoning is Morally Correct" paper John Hughes et all,
+In the "Fast and Loose reasoning is Morally Correct" paper John Hughes et al.
 showed that if two terms have the same semantics in the total language, then
 they have related semantics in the partial language and gave a prescription by
 which we can translate our knowledge between the two domains given a specific
@@ -2519,7 +2519,7 @@ parts of the Prelude are full of partial functions.
 
 The difference between partial and total functions is the compiler can't reason about the runtime safety of
 partial functions purely from the information specified in the language and as such the proof of safety is
-left to the user to to guarantee. They are safe to use in the case where the user can guarantee that invalid
+left to the user to guarantee. They are safe to use in the case where the user can guarantee that invalid
 inputs cannot occur, but like any unchecked property its safety or not-safety is going to depend on the
 diligence of the programmer. This very much goes against the overall philosophy of Haskell and as such they
 are discouraged when not necessary.
@@ -2533,7 +2533,7 @@ read :: Read a => String -> a
 Safe
 ----
 
-The Prelude has total variants of the historical partial functions (i.e. ``Text.Read.readMaybe``)in some
+The Prelude has total variants of the historical partial functions (e.g. ``Text.Read.readMaybe``)in some
 cases, but often these are found in the various utility libraries like ``safe``.
 
 The total versions provided fall into three cases:
@@ -2591,7 +2591,7 @@ usage and which segfaults?
 if p(x):
     # use x
 elif not p(x):
-    # dont use x
+    # don't use x
 
 # Or this one?
 if p(x):
@@ -2605,7 +2605,7 @@ can't distinguish the two either and thus the language won't save us if we
 happen to mix them up. Instead of making invalid states *unrepresentable* we've
 made the invalid state *indistinguishable* from the valid one!
 
-The more desirable practice is to match match on terms which explicitly witness
+The more desirable practice is to match on terms which explicitly witness
 the proposition as a type ( often in a sum type ) and won't typecheck otherwise.
 
 ```haskell
@@ -2661,7 +2661,7 @@ For a concrete consider the simple arithmetic sequence over the binary operator
 
 Foldable and Traversable are the general interface for all traversals and folds
 of any data structure which is parameterized over its element type ( List, Map,
-Set, Maybe, ...). These are two classes are used everywhere in modern Haskell
+Set, Maybe, ...). These two classes are used everywhere in modern Haskell
 and are extremely important.
 
 A foldable instance allows us to apply functions to data types of monoidal
@@ -2725,7 +2725,7 @@ foldr :: (a -> b -> b) -> b -> t a -> b
 foldr f z t = appEndo (foldMap (Endo . f) t) z
 ```
 
-Most of the operations over lists can be generalized in terms in combinations of
+Most of the operations over lists can be generalized in terms of combinations of
 Foldable and Traversable to derive more general functions that work over all
 data structures implementing Foldable.
 
@@ -2736,7 +2736,7 @@ Data.Foldable.minimum :: (Ord a, Foldable t) => t a -> a
 Data.Traversable.mapM :: (Monad m, Traversable t) => (a -> m b) -> t a -> m (t b)
 ```
 
-Unfortunately for historical reasons the names exported by foldable quite often conflict with ones defined in
+Unfortunately for historical reasons the names exported by Foldable quite often conflict with ones defined in
 the Prelude, either import them qualified or just disable the Prelude. The operations in the Foldable all
 specialize to the same behave the same as the ones Prelude for List types.
 
@@ -2970,8 +2970,8 @@ functor, and not a monad.
 ~~~~ {.haskell include="src/08-applicatives/applicative.hs"}
 ~~~~
 
-The pattern ``f <$> a <*> b ...`` shows us so frequently that there are a family
-of functions to lift applicatives of a fixed number arguments.  This pattern
+The pattern ``f <$> a <*> b ...`` shows up so frequently that there are a family
+of functions to lift applicatives of a fixed number of arguments.  This pattern
 also shows up frequently with monads (``liftM``, ``liftM2``, ``liftM3``).
 
 ```haskell
@@ -3185,7 +3185,7 @@ Bifunctors
 ----------
 
 Bifunctors are a generalization of functors to include types parameterized by
-two parameters and includes two map functions for each parameter. 
+two parameters and include two map functions for each parameter. 
 
 ```haskell
 class Bifunctor p where
@@ -3232,7 +3232,7 @@ Control.Exception
 -----------------
 
 The low-level (and most dangerous) way to handle errors is to use the ``throw`` and ``catch`` functions which
-allow us to throw extensible extensions in pure code but catch the resulting exception within IO.  Of
+allow us to throw extensible exceptions in pure code but catch the resulting exception within IO.  Of
 specific note is that return value of the ``throw`` inhabits all types. There's no reason to use this for
 custom code that doesn't use low-level system operations.
 
@@ -3382,10 +3382,10 @@ The ideal monad to use is simply the ``EitherT`` monad which we'd like to be abl
 similar to ``ErrorT``. For example suppose we wanted to use ``read`` to attempt to read a positive integer
 from stdin. There are two failure modes and two failure cases here, one for a parse error which fails with an
 error from ``Prelude.readIO``  and one for a non-positive integer which fails with a custom exception after a
-check. We'd like to be unify both cases in the same transformer.
+check. We'd like to unify both cases in the same transformer.
 
 Combined, the ``safe`` and ``errors``  make life with ``EitherT`` more pleasant. The safe library provides a
-variety of safer variants of the standard prelude functions that handle failures as Maybe values, explicitly
+variety of safer variants of the standard Prelude functions that handle failures as Maybe values, explicitly
 passed default values, or more informative exception "notes".  While the errors library reexports the safe
 Maybe functions and hoists them up into the ``EitherT`` monad providing a family of ``try`` prefixed functions
 that perform actions and can fail with an exception.
@@ -3623,13 +3623,13 @@ wrap :: MonadFree f m => f (m a) -> m a
 ```
 
 One of the best examples is the Partiality monad which models computations which can diverge. Haskell allows
-unbounded recursion, but for example we can create a free monad from the ``Maybe`` functor which when can be
+unbounded recursion, but for example we can create a free monad from the ``Maybe`` functor which can be
 used to fix the call-depth of, for example the [Ackermann function](https://en.wikipedia.org/wiki/Ackermann_function).
 
 ~~~~ {.haskell include="src/10-advanced-monads/partiality.hs"}
 ~~~~
 
-The other common use for free monads to build embedded domain languages to describe computations. We can model
+The other common use for free monads is to build embedded domain-specific languages to describe computations. We can model
 a subset of the IO monad by building up a pure description of the computation inside of the IOFree monad
 and then using the free monad to encode the translation to an effectful IO computation.
 
@@ -3651,7 +3651,7 @@ See:
 Indexed Monads
 --------------
 
-Indexed monads are a generalisation of monads  that adds an additional type parameter to the class that
+Indexed monads are a generalisation of monads that adds an additional type parameter to the class that
 carries information about the computation or structure of the monadic implementation.
 
 ```haskell
@@ -3662,9 +3662,9 @@ class IxMonad md where
 
 
 The canonical use-case is a variant of the vanilla State which allows type-changing on the state for
-intermediate steps inside of the monad. This indeed turns out to very useful for handling a class of problems
+intermediate steps inside of the monad. This indeed turns out to be very useful for handling a class of problems
 involving resource management since the extra index parameter gives us space to statically enforce the
-sequence of monadic actions by allowing and restriction certain state transitions on the index parameter at
+sequence of monadic actions by allowing and restricting certain state transitions on the index parameter at
 compile-time.
 
 To make this more usable we'll use the somewhat esoteric ``-XRebindableSyntax`` allowing us to overload the
@@ -3704,7 +3704,7 @@ only have one implementation since the only information that the information
 that can present in the body 
 
 ```haskell
-id :: forall. a -> a
+id :: forall a. a -> a
 id x = x
 ```
 
@@ -3725,7 +3725,7 @@ Type Systems
 
 **Hindley Milner Typesystem**
 
-The Hindley-Milner typesystem is historically import as one of the first typed lambda calculi that admitted
+The Hindley-Milner typesystem is historically important as one of the first typed lambda calculi that admitted
 both polymorphism and a variety of inference techniques that could always decide principle types.
 
 ```haskell
@@ -3741,7 +3741,7 @@ t : t -> t     -- function types
 ```
 
 In an implementation, the function ``generalize`` converts all type variables
-within the type that into polymorphic type variables yielding a type scheme. The
+within the type into polymorphic type variables yielding a type scheme. The
 function ``instantiate`` maps a scheme to a type, but with any polymorphic
 variables converted into unbound type variables.
 
@@ -3764,7 +3764,7 @@ e : x          -- variables
   | e_t        -- type application
 ```
 
-An example with equivalents of GHC Core in comments:
+Here's an example with equivalents of GHC core in comments.
 
 ```haskell
 id : ∀ t. t -> t
@@ -3796,9 +3796,9 @@ cons = Λa. λx:a. λxs:(∀ b. b -> (a -> b -> b) -> b).
 --     (@ b) (z :: b) (f :: a -> b -> b) -> f x (xs @ b z f)
 ```
 
-Normally when Haskell's typechecker infers a type signature it places all quantifiers of type variables at the
-outermost position such that that no quantifiers appear within the body of the type expression, called the
-prenex restriction This restrict an entire class of type signatures that are would otherwise expressible
+Normally when Haskell's typechecker infers a type signature places all quantifiers of type variables at the
+outermost position such that no quantifiers appear within the body of the type expression, called the
+prenex restriction. This restrict an entire class of type signatures that are would otherwise expressible
 within System-F, but has the benefit of making inference much easier.
 
 ``-XRankNTypes`` loosens the prenex restriction such that we may explicitly place quantifiers within the body
@@ -3851,7 +3851,7 @@ Existential Quantification
 
 The essence of universal quantification is that we can express functions which operate the same way for *any*
 type, while for existential quantification we can express functions that operate over an *some* unknown type.
-Using an existential we can group heterogeneous values together with a functions under the existential, that
+Using an existential we can group heterogeneous values together with functions under the existential, that
 manipulate the data types but whose type signature hides this information.
 
 ~~~~ {.haskell include="src/11-quantification/existential.hs"}
@@ -3864,7 +3864,7 @@ other way.
 ~~~~ {.haskell include="src/11-quantification/existential2.hs"}
 ~~~~
 
-Use of existentials can be used to recreate certain concepts from the so-called "Object Oriented Paradigm", a
+Existentials can be used to recreate certain concepts from the so-called "Object Oriented Paradigm", a
 school of thought popularized in the late 80s that attempted to decompose programming logic into
 anthropomorphic entities and actions instead of the modern equational treatment. Recreating this model in
 Haskell is widely considered to be an antipattern.
@@ -3876,8 +3876,8 @@ Impredicative Types
 
 Although extremely brittle, GHC also has limited support impredicative
 polymorphism which allows instantiating type variable with a polymorphic type.
-Implied is that this which loosens the restriction that that quantifiers must
-precede arrow types and now may be placed inside of type-constructors.
+Implied is that this loosens the restriction that quantifiers must
+precede arrow types and now they may be placed inside of type-constructors.
 
 ```haskell
 -- Can't unify ( Int ~ Char )
@@ -3896,7 +3896,7 @@ about telling us to enable it when one accidentally makes a typo in a type
 signature!
 
 Some notable trivia, the ``($)`` operator is wired into GHC in a very special
-way as to allow allow impredicative instantiation of ``runST`` to be applied via
+way as to allow impredicative instantiation of ``runST`` to be applied via
 ``($)`` by special-casing the ``($)`` operator only when used for the ST monad.
 If this sounds like an ugly hack it's because it is, but a rather convenient
 hack.
@@ -4141,7 +4141,7 @@ information at the type-level.
 ~~~~ {.haskell include="src/12-gadts/phantom.hs"}
 ~~~~
 
-Notice t type variable ``tag`` does not appear in the right hand side of the declaration. Using this allows us
+Notice the type variable ``tag`` does not appear in the right hand side of the declaration. Using this allows us
 to express invariants at the type-level that need not manifest at the value-level. We're effectively
 programming by adding extra information at the type-level.
 
@@ -4162,7 +4162,7 @@ into the body of the pattern match.
 ~~~~ {.haskell include="src/12-gadts/equal.hs"}
 ~~~~
 
-As of GHC 7.8 these constructors and functions are included in the Prelude in the
+As of GHC 7.8 these constructors and functions are included in the
 [Data.Type.Equality](http://hackage.haskell.org/package/base-4.7.0.0/docs/Data-Type-Equality.html) module.
 
 Interpreters
@@ -4267,7 +4267,7 @@ type (->) a b = a -> b          -- b ^ a
 
 Intuitively it follows the notion that the cardinality of set of inhabitants of a type can always be given as
 a function of the number of its holes. A product type admits a number of inhabitants as a function of the
-product (i.e. cardinality of the Cartesian product), a sum type as as the sum of its holes and a function
+product (i.e. cardinality of the Cartesian product), a sum type as the sum of its holes and a function
 type as the exponential of the span of the domain and codomain.
 
 ```haskell
@@ -4315,7 +4315,7 @@ ana  :: Functor f => Coalgebra f a -> a -> Fix f
 hylo :: Functor f => Algebra f b -> Coalgebra f a -> a -> b
 ```
 
-In Haskell a F-algebra in a functor ``f a`` together with function ``f a -> a``.
+In Haskell a F-algebra is a functor ``f a`` together with function ``f a -> a``.
 A colagebra reverses the function. For a functor ``f`` we can form its
 recursive unrolling using the recursive ``Fix`` newtype wrapper.
 
@@ -4350,7 +4350,7 @@ ana :: Functor f => Coalgebra f a -> a -> Fix f
 ana coalg = Fix . fmap (ana coalg) . coalg
 ```
 
-We call these functions *catamorphisms* and *anamorphisms*. Notice especially that the types of thees two
+We call these functions *catamorphisms* and *anamorphisms*. Notice especially that the types of these two
 functions simply reverse the direction of arrows. Interpreted in another way they transform an
 algebra/colaglebra which defines a flat structure-preserving mapping between ``Fix f`` ``f`` into a function
 which either rolls or unrolls the fixpoint. What is particularly nice about this approach is that the
@@ -4381,7 +4381,7 @@ compose f g = f . unFix . g
 recursion-schemes
 -----------------
 
-The code from the F-algebra examples above is implemented in an off-the shelf 
+The code from the F-algebra examples above is implemented in an off-the-shelf 
 library called ``recursion-schemes``.
 
 ~~~~ {.haskell include="src/14-interpreters/recursion_schemes.hs"}
@@ -4399,7 +4399,7 @@ See:
 Hint and Mueval
 ---------------
 
-GHC itself can actually interpreter arbitrary Haskell source on the fly by
+GHC itself can actually interpret arbitrary Haskell source on the fly by
 hooking into the GHC's bytecode interpreter ( the same used for GHCi ). The hint
 package allows us to parse, typecheck, and evaluate arbitrary strings into
 arbitrary Haskell programs and evaluate them.
@@ -4418,12 +4418,12 @@ This is generally not a wise thing to build a library around, unless of course
 the purpose of the program is itself to evaluate arbitrary Haskell code (
 something like an online Haskell shell or the likes ).
 
-Both hint and mueval do effectively the same task, desigend around slightly
+Both hint and mueval do effectively the same task, designed around slightly
 different internals of the GHC Api.
 
 See:
 
-* [hint](http://hackage.haskell.org/package/mueval)
+* [hint](http://hackage.haskell.org/package/hint)
 * [mueval](http://hackage.haskell.org/package/mueval)
 
 Testing
@@ -4431,7 +4431,7 @@ Testing
 
 Contrary to a lot of misinformation, unit testing in Haskell is quite common and robust. Although generally
 speaking unit tests tend to be of less importance in Haskell since the type system makes an enormous amount of
-invalid programs complete inexpressible by construction. Unit tests tend to be written later in the
+invalid programs completely inexpressible by construction. Unit tests tend to be written later in the
 development lifecycle and generally tend to be about the core logic of the program and not the intermediate
 plumbing.
 
@@ -4719,8 +4719,8 @@ superclasses, and reduces the types to head normal form. For example:
 ```
 
 If a single parameter typeclass expresses a property of a type ( i.e. it's in a
-class or not in class ) then a multiparamater typeclass expresses relationships
-between types. For example whether if we wanted to express the relation a type
+class or not in class ) then a multiparameter typeclass expresses relationships
+between types. For example if we wanted to express the relation a type
 can be converted to another type we might use a class like:
 
 ~~~~ {.haskell include="src/16-type-families/mparam.hs"}
@@ -4729,7 +4729,7 @@ can be converted to another type we might use a class like:
 Of course now our instances for ``Convertible Int`` are not unique anymore, so
 there no longer exists a nice procedure for determining the inferred type of
 ``b`` from just ``a``. To remedy this let's add a functional dependency ``a ->
-b``, which says tells GHC that an instance ``a`` uniquely determines the
+b``, which tells GHC that an instance ``a`` uniquely determines the
 instance that b can be.  So we'll see that our two instances relating ``Int`` to
 both ``Integer`` and ``Char`` conflict.
 
@@ -4743,9 +4743,9 @@ Functional dependencies conflict between instance declarations:
 ```
 
 Now there's a simpler procedure for determining instances uniquely and
-multiparamater typeclasses become more usable and inferable again. Effectively a
+multiparameter typeclasses become more usable and inferable again. Effectively a
 functional dependency ``| a -> b`` says that we can't define multiple
-multiparamater typeclass instances with the same ``a`` but different ``b``.
+multiparameter typeclass instances with the same ``a`` but different ``b``.
 
 ```haskell
 λ: convert (42 :: Int)
@@ -4755,7 +4755,7 @@ multiparamater typeclass instances with the same ``a`` but different ``b``.
 ```
 
 Now let's make things not so simple. Turning on ``UndecidableInstances`` loosens
-the constraint on context reduction can only allow constraints of the class to
+the constraint on context reduction that can only allow constraints of the class to
 become structural smaller than its head. As a result implicit computation can
 now occur *within in the type class instance search*. Combined with a type-level
 representation of Peano numbers we find that we can encode basic arithmetic at
@@ -4765,7 +4765,7 @@ the type-level.
 ~~~~
 
 If the typeclass contexts look similar to Prolog you're not wrong, if one reads
-the contexts qualifier ``(=>)`` backwards as backwards turnstiles ``:-`` then
+the contexts qualifier ``(=>)`` backwards as turnstiles ``:-`` then
 it's precisely the same equations.
 
 ```prolog
@@ -4833,7 +4833,7 @@ instance Convertible Char where
   convert = ord
 ```
 
-Using the same example we used for multiparamater + functional dependencies
+Using the same example we used for multiparameter + functional dependencies
 illustration we see that there is a direct translation between the type family
 approach and functional dependencies. These two approaches have the same
 expressive power.
@@ -4871,8 +4871,8 @@ The type level functions defined by type-families are not neccessarily
 type. This differs from the behavior of type constructors ( which are also
 type-level functions ) which are injective.
 
-For example for the constructor ``Maybe``,  ``Maybe t1 = Maybe t2`` implies that
-``t1 = t2``.
+For example for the constructor ``Maybe``,  ``Maybe t1 ~ Maybe t2`` implies that
+``t1 ~ t2``.
 
 ```haskell
 data Maybe a = Nothing | Just a
@@ -4905,7 +4905,7 @@ equality:
 ~~~~ {.haskell include="src/16-type-families/roles.hs"}
 ~~~~
 
-Roles are normally automatically inferred automatically, but with the
+Roles are normally inferred automatically, but with the
 ``RoleAnnotations`` extension they can be manually annotated. Except in rare
 cases this should not be necessary although it is helpful to know what is going
 on under the hood.
@@ -4938,7 +4938,7 @@ ofoldr :: MonoFoldable mono
         => (Element mono -> b -> b) -> b -> mono -> b
 ```
 
-For example the text type normally does not admit either any of these
+For example the text type normally does not admit any of these
 type-classes since, but now we can write down the instances that model the
 interface of Foldable and Traversable.
 
@@ -5016,8 +5016,8 @@ Axiom 2: a + suc b = suc (a + b)
 ∎
 ```
 
-Translated into Haskell our axioms are simply are type definitions and recursing
-over the inductive datatype constitutes the inductive step of our our proof.
+Translated into Haskell our axioms are simply type definitions and recursing
+over the inductive datatype constitutes the inductive step of our proof.
 
 ~~~~ {.haskell include="src/16-type-families/proof.hs"}
 ~~~~
@@ -5091,8 +5091,8 @@ Promotion
 Higher Kinds
 ------------
 
-The kind system in Haskell is unique most other languages in that it allows
-datatypes to be constructed which take types and type constructor to other
+The kind system in Haskell is unique compared with most other languages in that it allows
+datatypes to be constructed which take type constructors to other
 types. Such a system is said to support *higher kinded types*.
 
 All kind annotations in Haskell necessarily result in a kind ``*`` although any
@@ -5159,7 +5159,7 @@ data Mu f a = Roll (f (Mu f) a)
 data Proxy a = Proxy
 ```
 
-Using the polykinded ``Proxy`` type allows us to write down type class functions which over constructors of
+Using the polykinded ``Proxy`` type allows us to write down type class functions over constructors of
 arbitrary kind arity.
 
 ~~~~ {.haskell include="src/17-promotion/kindpoly.hs"}
@@ -5200,8 +5200,8 @@ data S a b = L a | R b
 -- R :: b -> S a b
 ```
 
-With the extension enabled we see that we our type constructors are now automatically promoted so that ``L``
-or ``R`` can be viewed as both a data constructor of the type ``S`` or as the type ``L`` with kind ``S``.
+With the extension enabled we see that our type constructors are now automatically promoted so that ``L``
+or ``R`` can be viewed as both a data constructor of the type ``S`` or as the type ``L``/``R`` with kind ``S``.
 
 ```haskell
 {-# LANGUAGE DataKinds #-}
@@ -5223,7 +5223,7 @@ type Bar = 'Bar
 type Baz = 'Baz
 ```
 
-Combining this with type families we see we can not write meaningful, meaningful type-level functions by
+Combining this with type families we see we can write meaningful, type-level functions by
 lifting types to the kind level.
 
 ~~~~ {.haskell include="src/17-promotion/typefamily.hs"}
@@ -5271,7 +5271,7 @@ See:
 Typelevel Numbers
 -----------------
 
-GHC's type literals can also be used in place of explicit Peano arithmetic,
+GHC's type literals can also be used in place of explicit Peano arithmetic.
 
 GHC 7.6 is very conservative about performing reduction, GHC 7.8 is much less so and will can solve many
 typelevel constraints involving natural numbers but sometimes still needs a little coaxing.
@@ -5350,7 +5350,7 @@ e :: Proxy (Maybe ())
 e = Proxy
 ```
 
-This is provided by the by the Prelude in 7.8.
+This is provided by the Prelude in 7.8.
 
 Promoted Syntax
 ---------------
@@ -5396,7 +5396,7 @@ Just [Int, Bool, Char] :: Maybe [*]
 Singleton Types
 ---------------
 
-A singleton type is a type a single value inhabitant. Singleton types can be constructed in a variety of ways
+A singleton type is a type with a single value inhabitant. Singleton types can be constructed in a variety of ways
 using GADTs or with data families.
 
 ```haskell
@@ -5547,7 +5547,7 @@ TemplateHaskell or a Generic deriving.
 HLists
 ------
 
-A heterogeneous list is a cons list whose type statically encodes the ordered types of of its values.
+A heterogeneous list is a cons list whose type statically encodes the ordered types of its values.
 
 ~~~~ {.haskell include="src/17-promotion/hlist.hs"}
 ~~~~
@@ -5593,7 +5593,7 @@ lookup function.
 Advanced Proofs
 ---------------
 
-Now that we have the this length-indexed vector let's go write the reverse function, how hard could it be?
+Now that we have the length-indexed vector let's go write the reverse function, how hard could it be?
 
 So we go and write down something like this:
 
@@ -5622,7 +5622,7 @@ As we unfold elements out of the vector we'll end up a doing a lot of type-level
 combine the subparts of the vector backwards, but as a consequence we find that GHC will run into some
 unification errors because it doesn't know about basic arithmetic properties of the natural numbers. Namely
 that ``forall n. n + 0 = 0`` and   ``forall n m. n + (1 + m) = 1 + (n + m) ``.  Which of course it really
-shouldn't given that we've constructed a system at the type-level which intuitively *models* arithmetic but
+shouldn't be given that we've constructed a system at the type-level which intuitively *models* arithmetic but
 GHC is just a dumb compiler, it can't automatically deduce the isomorphism between natural numbers and Peano
 numbers.
 
@@ -5718,7 +5718,7 @@ typeOf :: Typeable a => a -> TypeRep
 ~~~~
 
 Using the Typeable instance allows us to write down a type safe cast function
-which can safely use ``unsafeCast`` and provide a proof that the resulting type
+which can safely use ``unsafeCoerce`` and provide a proof that the resulting type
 matches the input.
 
 ```haskell
@@ -5727,11 +5727,11 @@ cast x
   | typeOf x == typeOf ret = Just ret
   | otherwise = Nothing
   where
-    ret = unsafeCast x
+    ret = unsafeCoerce x
 ```
 
 Of historical note is that writing our own Typeable classes is currently
-possible of GHC 7.6 but allows us to introduce dangerous behavior that can cause
+possible as of GHC 7.6 but allows us to introduce dangerous behavior that can cause
 crashes, and shouldn't be done except by GHC itself. As of 7.8 GHC forbids
 hand-written Typeable instances.
 
@@ -5784,8 +5784,7 @@ class Typeable a => Data a where
 
 The types for ``gfoldl`` and ``gunfold`` are a little intimidating ( and depend
 on ``Rank2Types`` ), the best way to understand is to look at some examples.
-First the most trivial case a simple sum type ``Animal`` would produce the
-follow the following code:
+First the most trivial case a simple sum type ``Animal`` would produce the following code:
 
 ```haskell
 data Animal = Cat | Dog deriving Typeable
@@ -5872,9 +5871,9 @@ tuple2DataType = mkDataType "Prelude.(,)" [tuple2Constr]
 This is pretty neat, now within the same typeclass we have a generic way to
 introspect any ``Data`` instance and write logic that depends on the structure
 and types of its subterms. We can now write a function which allow us to
-traverse an arbitrary instance Data and twiddle values based on pattern matching
+traverse an arbitrary Data instance and twiddle values based on pattern matching
 on the runtime types. So let's write down a function ``over`` which increments a
-``Value`` type for both for n-tuples and lists.
+``Val`` type for both for n-tuples and lists.
 
 ~~~~ {.haskell include="src/18-generics/data.hs"}
 ~~~~
@@ -5896,7 +5895,7 @@ example2 = numHoles (Just 3)
 ```
 
 This method adapts itself well to generic traversals but the types quickly
-become rather hairy when dealing anymore more complicated involving folds and
+become rather hairy when dealing any more complicated involving folds and
 unsafe coercions.
 
 
@@ -5962,7 +5961,7 @@ like this:
 ~~~~ {.haskell include="src/18-generics/generics.hs"}
 ~~~~
 
-Use ``kind!`` in GHCi we can look at the type family ``Rep`` associated with a Generic instance. 
+Use ``kind!`` in GHCi and we can look at the type family ``Rep`` associated with a Generic instance. 
 
 ```haskell
 λ: :kind! Rep Animal
@@ -6014,7 +6013,7 @@ instance (GEq' a, GEq' b) => GEq' (a :*: b) where
   geq' (a1 :*: b1) (a2 :*: b2) = geq' a1 a2 && geq' b1 b2
 ```
 
-Now to to accommodate the two methods of writing classes (generic-deriving or
+Now to accommodate the two methods of writing classes (generic-deriving or
 custom implementations) we can use ``DefaultSignatures`` extension to allow the
 user to leave typeclass functions blank and defer to the Generic or to define
 their own.
@@ -6029,7 +6028,7 @@ class GEq a where
   geq x y = geq' (from x) (from y)
 ```
 
-Now anyone using our library need only derive Generic and create an empty
+Now anyone using our library needs only derive Generic and creates an empty
 instance of our typeclass instance without writing any boilerplate for ``GEq``.
 
 See: 
@@ -6068,7 +6067,7 @@ Uniplate
 
 Uniplate is a generics library for writing traversals and transformation for
 arbitrary data structures. It is extremely useful for writing AST
-transformations and rewrite systems.
+transformations and rewriting systems.
 
 ```haskell
 plate :: from -> Type from to
@@ -6114,7 +6113,7 @@ data Expr a
 **Biplate**
 
 Biplates generalize plates where the target type isn't necessarily the same as
-the source, it uses multiparamater typeclasses to indicate the type sub of the
+the source, it uses multiparameter typeclasses to indicate the type of the
 sub-target. The Uniplate functions all have an equivalent generalized biplate
 form.
 
@@ -6143,7 +6142,7 @@ literals without a mechanism for "coercions" often found in other languages.
 
 To add to confusion numerical literals in Haskell are desugared into a function
 from a numeric typeclass which yields a polymorphic value that can be
-instantiated to nay instance of the ``Num`` or ``Fractional`` typeclass at the
+instantiated to any instance of the ``Num`` or ``Fractional`` typeclass at the
 call-site, depending on the inferred type. 
 
 To use a blunt metaphor, we're effectively placing an object in a hole and the
@@ -6174,7 +6173,7 @@ class (RealFrac a, Floating a) => RealFloat a
 
 ![](img/numerics.png)
 
-Conversions between concrete numeric types (from : top row, to : left column )
+Conversions between concrete numeric types ( from : left column, to : top row )
 is accomplished with several generic functions.
 
          Double       Float         Int           Word           Integer       Rational
@@ -6263,7 +6262,7 @@ Constructive Reals
 Instead of modeling the real numbers of finite precision floating point numbers
 we alternatively work with ``Num`` of that internally manipulate the power
 series expansions for the expressions when performing operations like arithmetic
-or transcendental functions without loosing precision when performing
+or transcendental functions without losing precision when performing
 intermediate computations. Then when simply slice of a fixed number of terms and
 approximate the resulting number to a desired precision. This approach is not
 without its limitations and caveats ( notably that it may diverge ) but works
@@ -7938,7 +7937,7 @@ entirely free.
 
 Many C++ compilers or whole program optimizing compilers do the opposite
 however, they explicitly specialize each and every function at the call site
-replacing the overloaded function with its type-specific implementation. We can
+replacing the overloaded function with it's type-specific implementation. We can
 selectively enable this kind of behavior using class specialization.
 
 ~~~~ {.haskell include="src/29-ghc/specialize.hs"}
@@ -9589,7 +9588,7 @@ get l (set l b a) = b
 **Law 2**
 
 ```haskell
-set l (get l a) a = a
+set l (view l a) a = a
 ```
 
 **Law 3**
