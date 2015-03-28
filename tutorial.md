@@ -3764,7 +3764,7 @@ e : x          -- variables
   | e_t        -- type application
 ```
 
-Here's an example with equivalents of GHC core in comments.
+An example with equivalents of GHC Core in comments.
 
 ```haskell
 id : ∀ t. t -> t
@@ -6243,7 +6243,7 @@ fromFloatDigits :: RealFloat a => a -> Scientific
 ```
 
 Scientific provides arbitrary-precision number represented using scientific
-notation. The constructor takes an arbitrarily sized Integer argument with for
+notation. The constructor takes an arbitrarily sized Integer argument for
 digits and an Int for the exponential. Alternatively the value can be parsed from
 a String or coerced from either Double/Float.
 
@@ -6260,10 +6260,10 @@ Constructive Reals
 ------------------
 
 Instead of modeling the real numbers of finite precision floating point numbers
-we alternatively work with ``Num`` of that internally manipulate the power
-series expansions for the expressions when performing operations like arithmetic
+we alternatively work with ``Num`` that internally manipulates the power
+series expansions for the expressions when performing operations like algebraic
 or transcendental functions without losing precision when performing
-intermediate computations. Then when simply slice of a fixed number of terms and
+intermediate computations. Then we simply slice off a fixed number of terms and
 approximate the resulting number to a desired precision. This approach is not
 without its limitations and caveats ( notably that it may diverge ) but works
 quite well in practice.
@@ -6323,12 +6323,12 @@ SMT Solvers
 A generalization of the SAT problem to include predicates other theories gives
 rise to the very sophisticated domain of "Satisfiability Modulo Theory"
 problems. The existing SMT solvers are very sophisticated projects ( usually
-bankrolled by large institutions ) and usually have to called out to via foreign
+bankrolled by large institutions ) and usually have to be called out to via foreign
 function interface or via a common interface called SMT-lib. The two most common
 of use in Haskell are ``cvc4`` from Stanford and ``z3`` from Microsoft Research.
 
-The SBV library can abstract over different SMT solvers allow us to express the
-problem in an embedded domain language in Haskell and then offload the solving
+The SBV library can abstract over different SMT solvers allowing us to express the
+problem in an embedded domain-specific language in Haskell and then offload the solving
 work to the third party library.
 
 TODO: Talk about SBV
@@ -6362,7 +6362,7 @@ Set
 Vector
 ------
 
-Vectors are high performance single dimensional arrays that come come in six variants, two for each of the
+Vectors are high performance single dimensional arrays that come in six variants, two for each of the
 following types of a mutable and an immutable variant.
 
 * Data.Vector
@@ -9588,7 +9588,7 @@ get l (set l b a) = b
 **Law 2**
 
 ```haskell
-set l (view l a) a = a
+set l (get l a) a = a
 ```
 
 **Law 3**
